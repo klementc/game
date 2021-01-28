@@ -47,6 +47,7 @@ import { StadiumB } from "./StadiumB";
 import { PlayerShell } from "./PlayerShell";
 import { PlayerObject } from "./PlayerObject";
 import { LevelFlags } from "../../shared/level";
+import { ExternalEvent } from "./ExternalEvent";
 
 export class Game extends lib.flash.display.MovieClip {
   public declare bg: BitmapCanvas;
@@ -1041,9 +1042,15 @@ export class Game extends lib.flash.display.MovieClip {
 
   public pauseOut(e: lib.flash.events.MouseEvent = null): any {
     this.isPaused = !this.isPaused;
+    if(this.isPaused)
+      this.dispatchEvent(new ExternalEvent({ type: "pause-start" }));
+    else
+      this.dispatchEvent(new ExternalEvent({ type: "pause-end" }));
+
   }
 
   public ping(e: lib.flash.events.Event = null): any {
+    if(Key.isDown(lib.flash.ui.Keyboard.T)){this.pauseOut()}
     if (this.isPaused && this.mode === "SP") {
       return;
     }
