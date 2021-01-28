@@ -105,12 +105,12 @@ export const AppRecorder: React.FC<Props> = observer((props) => {
         }
         controller.root.recorder.recording = decodeRecording(recording);
         controller.root.recorder.startReplay();
-        swfController.recording = decodeRecording(recording);
-        swfController.startReplay();
+        //swfController.recording = decodeRecording(recording);
+        //swfController.startReplay();
 
         setTimeout(() => {
           controller.root?.recorder.startSPGame(level - 1);
-          swfController.startSPGame(level - 1);
+          //swfController.startSPGame(level - 1);
         }, 0);
       }),
     [controller, swfController, recording, level]

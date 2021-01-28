@@ -187,8 +187,11 @@ export class Game extends lib.flash.display.MovieClip {
 
   private isPressingKill = false;
 
+  public declare checkPT : number;
+
   public constructor() {
     super();
+    this.checkPT = 0;
     this.xCamX = 375;
     this.yCamY = 375;
     this.updateMethod = 0;
@@ -334,6 +337,7 @@ export class Game extends lib.flash.display.MovieClip {
   }
 
   public createNewLevel(): any {
+    this.checkPT = 0;
     this.levelFinished = false;
     this.tryFrame = 0;
     this.checkPoints.splice(0, this.checkPoints.length);
@@ -883,6 +887,7 @@ export class Game extends lib.flash.display.MovieClip {
     ) {
       this.dispatchEvent(new AchEvent(AchEvent.SEND, 14));
     }
+    this.level.canvas.lineTo(this.player.x-3, this.player.y-3, this.player.x+3, this.player.y+3, 6, 16711680);
     this.deathScreens = 0;
     this.morgue.addDeadBody(this.player, this.player.colour);
     this.player.flowPoints = 0;
@@ -1121,6 +1126,11 @@ export class Game extends lib.flash.display.MovieClip {
           this.collectSign();
         }
       }
+    }
+    if(Key.isDown(lib.flash.ui.Keyboard.C)){
+      this.checkPT = (this.checkPT+1) %this.level.checkPoints.length;
+      this.player.x = this.level.checkPoints[this.checkPT].x;
+      this.player.y = this.level.checkPoints[this.checkPT].y;
     }
 
     const isPressingPause = Key.isDown(lib.flash.ui.Keyboard.P);
